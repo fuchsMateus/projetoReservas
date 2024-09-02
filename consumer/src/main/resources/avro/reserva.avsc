@@ -1,0 +1,16 @@
+{
+  "namespace": "com.reserva.consumer",
+  "type": "record",
+  "name": "Reserva",
+  "fields": [
+    {"name": "idReserva", "type": "string"},
+    {"name": "nomeHospede", "type": "string"},
+    {"name": "emailHospede", "type": "string"},
+    {"name": "dataCheckIn", "type": {"type": "int", "logicalType": "date"}},
+    {"name": "dataCheckOut", "type": {"type": "int", "logicalType": "date"}},
+    {"name": "statusReserva", "type": "string"},
+    {"name": "precoTotal", "type": "double"},
+    {"name": "tipoQuarto", "type": "string"},
+    {"name": "telefoneContato", "type": "string"}
+  ]
+}
