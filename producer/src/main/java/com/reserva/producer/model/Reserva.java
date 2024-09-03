@@ -1,4 +1,4 @@
-package com.reserva.producer;
+package com.reserva.producer.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

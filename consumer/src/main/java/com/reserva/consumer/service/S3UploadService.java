@@ -1,4 +1,4 @@
-package com.reserva.consumer;
+package com.reserva.consumer.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;

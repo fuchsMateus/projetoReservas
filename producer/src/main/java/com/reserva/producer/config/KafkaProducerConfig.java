@@ -1,4 +1,5 @@
-package com.reserva.producer;
+package com.reserva.producer.config;
+import com.reserva.producer.model.Reserva;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;

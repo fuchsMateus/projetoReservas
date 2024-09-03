@@ -1,5 +1,7 @@
 package com.reserva.producer;
 
+import com.reserva.producer.model.Reserva;
+import com.reserva.producer.model.ReservaFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 @ComponentScan(basePackages = "com.reserva.producer")
 public class ProducerApplication {
 
-	private static KafkaTemplate<String,Reserva> kafkaTemplate;
+	private static KafkaTemplate<String, Reserva> kafkaTemplate;
 	public ProducerApplication(KafkaTemplate<String, Reserva> kafkaTemplate ) {
 		ProducerApplication.kafkaTemplate = kafkaTemplate;
 	}
@@ -25,7 +27,7 @@ public class ProducerApplication {
 
 		Runnable tarefa = () -> {
 
-			for (int i = 0; i < 90; i++) {
+			for (int i = 0; i < 10; i++) {
 				Reserva reservaAleatoria = ReservaFactory.gerarReservaAleatoria();
 				kafkaTemplate.send("reservas", reservaAleatoria.getIdReserva().toString(), reservaAleatoria);
 			}

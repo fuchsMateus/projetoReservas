@@ -1,4 +1,4 @@
-package com.reserva.consumer;
+package com.reserva.consumer.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.reserva.consumer;
+package com.reserva.consumer.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;

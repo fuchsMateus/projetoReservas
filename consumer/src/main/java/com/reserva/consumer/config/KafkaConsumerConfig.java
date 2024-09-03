@@ -1,5 +1,6 @@
-package com.reserva.consumer;
+package com.reserva.consumer.config;
 
+import com.reserva.consumer.model.Reserva;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
