@@ -32,21 +32,21 @@ public class ReservaListener {
         Schema schema = new Schema.Parser().parse(new File("src/main/resources/avro/reserva.avsc"));
         reservaService.setSchema(schema);
         byte[] parquet =  reservaService.recordToParquet(reservaService.convertToAvroRecord(reserva));
-
+        /*
         String path = "C:\\Users\\fuchs\\Desktop\\kafka\\dados\\"+reserva.getIdReserva().toString()+".parquet";
 
         try (FileOutputStream fos = new FileOutputStream(path)) {
             fos.write(parquet);
         } catch (IOException e) {
             System.out.println("Erro ao escrever no arquivo: " + e.getMessage());
-        }
+        }*/
 
-        /*
+
         String bucketName = "reservas-estagio-fuchs";
         String s3Path = String.format("checkin=%s/status=%s/%s.parquet",
                 reserva.getDataCheckIn().toString(), reserva.getStatusReserva(), reserva.getIdReserva().toString());
 
         s3UploadService.uploadParquetToS3(parquet, bucketName, s3Path);
-        */
+
     }
 }

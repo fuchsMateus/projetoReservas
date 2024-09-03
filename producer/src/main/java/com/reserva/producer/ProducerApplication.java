@@ -27,7 +27,7 @@ public class ProducerApplication {
 
 		Runnable tarefa = () -> {
 
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < 1; i++) {
 				Reserva reservaAleatoria = ReservaFactory.gerarReservaAleatoria();
 				kafkaTemplate.send("reservas", reservaAleatoria.getIdReserva().toString(), reservaAleatoria);
 			}
