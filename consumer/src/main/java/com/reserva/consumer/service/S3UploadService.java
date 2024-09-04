@@ -16,7 +16,6 @@ public class S3UploadService {
 
     public void uploadParquetToS3(byte[] parquetFile, String bucketName, String s3Path) throws IOException {
         try {
-            // Cria a requisição para upload
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(bucketName)
                     .key(s3Path)
@@ -24,7 +23,6 @@ public class S3UploadService {
                     .contentLength((long) parquetFile.length)
                     .build();
 
-            // Faz o upload do arquivo
             s3client.putObject(putObjectRequest, RequestBody.fromBytes(parquetFile));
         } catch (Exception e) {
             e.printStackTrace();

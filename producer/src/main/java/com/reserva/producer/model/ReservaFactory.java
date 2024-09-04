@@ -39,6 +39,12 @@ public class ReservaFactory {
             "Torres", "Souto", "Fonseca", "Veiga", "Lacerda", "Drumond", "Barros", "Cabral", "Campos", "Lemos"
     );
 
+    private static final List<String> HOTEIS = Arrays.asList(
+            "Hotel Dijkstra", "Hotel Dijkstra", "Hotel Kruskal", "Hotel Prim", "Hotel Floyd-Warshall",
+            "Hotel Floyd-Warshall", "Hotel Bellman-Ford", "Hotel Minimax", "Hotel A*", "Hotel Quicksort",
+            "Hotel Mergesort", "Hotel Round-Robin"
+    );
+
 
     private static final List<String> TIPOS_QUARTO = Arrays.asList(
             "Solteiro", "Solteiro", "Solteiro", "Duplo", "Duplo", "Duplo","Duplo", "Suíte","Suíte", "Presidencial"
@@ -58,6 +64,7 @@ public class ReservaFactory {
 
     public static Reserva gerarReservaAleatoria() {
         UUID idReserva = UUID.randomUUID();
+        String nomeHotel = gerarHotelAleatorio();
         String nomeHospede = gerarNomeAleatorio();
         String emailHospede = gerarEmailAleatorio(nomeHospede);
         LocalDate dataCheckIn = gerarDataAleatoria();
@@ -68,7 +75,7 @@ public class ReservaFactory {
         Double precoTotal = calcularPrecoTotal(tipoQuarto,numeroDias);
         String telefoneContato = gerarTelefoneAleatorio();
 
-        return new Reserva(idReserva, nomeHospede, emailHospede, dataCheckIn, dataCheckOut, statusReserva, precoTotal, tipoQuarto, telefoneContato);
+        return new Reserva(idReserva,nomeHotel, nomeHospede, emailHospede, dataCheckIn, dataCheckOut, statusReserva, precoTotal, tipoQuarto, telefoneContato);
     }
 
     private static double calcularPrecoTotal(String tipoQuarto, Integer numeroDias) {
@@ -92,6 +99,10 @@ public class ReservaFactory {
         return DIAS.get(random.nextInt(DIAS.size()));
     }
 
+    private static String gerarHotelAleatorio() {
+        return HOTEIS.get(random.nextInt(HOTEIS.size()));
+    }
+
     private static String gerarEmailAleatorio(String nomeHospede) {
         String dominio = DOMINIOS_EMAIL.get(random.nextInt(DOMINIOS_EMAIL.size()));
         return removerAcentosECedilha(nomeHospede.toLowerCase().replace(" ", "")) + "@" + dominio;
@@ -110,7 +121,7 @@ public class ReservaFactory {
             mes = Month.of(random.nextInt(12) + 1);
         }
 
-        int ano = LocalDate.now().getYear() + random.nextInt(3) - 1;
+        int ano = LocalDate.now().getYear() + random.nextInt(2);
         int dia = random.nextInt(mes.length(Year.isLeap(ano))) + 1;
 
         return LocalDate.of(ano, mes, dia);

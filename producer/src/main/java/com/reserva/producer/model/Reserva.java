@@ -14,6 +14,7 @@ import java.util.UUID;
 @ToString
 public class Reserva {
     private UUID idReserva;
+    private String nomeHotel;
     private String nomeHospede;
     private String emailHospede;
     private LocalDate dataCheckIn;

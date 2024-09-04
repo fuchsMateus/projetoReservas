@@ -9,17 +9,18 @@ import org.apache.parquet.hadoop.ParquetWriter;
 import org.apache.parquet.hadoop.metadata.CompressionCodecName;
 import org.apache.parquet.io.OutputFile;
 import org.apache.parquet.io.PositionOutputStream;
+import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public abstract class ParquetService {
+@Service
+public class ParquetService {
 
     @Getter
     @Setter
     private Schema schema;
 
-    public abstract GenericRecord convertToAvroRecord(Object object);
     public byte[] recordToParquet(GenericRecord record) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
