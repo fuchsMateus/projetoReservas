@@ -42,6 +42,7 @@ public class ReservaListener {
 
     @KafkaListener(topics = "reservas", groupId = "consumidor-group")
     public void listen(byte[] mensagem) throws IOException {
+        System.out.println("Mensagem Recebida");
 
         ByteArrayInputStream input = new ByteArrayInputStream(mensagem);
         DatumReader<GenericRecord> reader = new SpecificDatumReader<>(schema);

@@ -41,7 +41,7 @@ public class ReservaFactory {
 
     private static final List<String> HOTEIS = Arrays.asList(
             "Hotel Dijkstra", "Hotel Dijkstra", "Hotel Kruskal", "Hotel Prim", "Hotel Floyd-Warshall",
-            "Hotel Floyd-Warshall", "Hotel Bellman-Ford", "Hotel Minimax", "Hotel A*", "Hotel Quicksort",
+            "Hotel Floyd-Warshall", "Hotel Bellman-Ford", "Hotel Minimax", "Hotel A-Estrela", "Hotel Quicksort",
             "Hotel Mergesort", "Hotel Round-Robin"
     );
 

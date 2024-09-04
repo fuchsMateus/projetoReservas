@@ -39,7 +39,7 @@ public class ProducerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProducerApplication.class, args);
-		produzirMensagens(2,1,true);
+		produzirMensagens(50,1,true);
 	}
 
 	public static void produzirMensagens(int numMensagens, int periodo, boolean log){
