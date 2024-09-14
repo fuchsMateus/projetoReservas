@@ -14,8 +14,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -38,7 +36,6 @@ public class GroupMessages extends KeyedProcessFunction<String, GenericRecord, V
     public void open(org.apache.flink.configuration.Configuration parameters) throws Exception {
         super.open(parameters);
 
-        // Inicializa o esquema a partir da string do schema JSON
         this.schema = new Schema.Parser().parse(schemaString);
 
         this.parquetConverter = new ParquetConverter();
@@ -71,8 +68,7 @@ public class GroupMessages extends KeyedProcessFunction<String, GenericRecord, V
             byte[] parquet = parquetConverter.recordsToParquet(records);
 
             // Salvar o arquivo Parquet
-            String path = "C:\\Users\\fuchs\\Desktop\\kafka\\dados\\" +
-                    records.get(0).get("nomeHotel") + "\\";
+            String path = "/dados/" + records.get(0).get("nomeHotel") + "/";
 
             String filePath = path + UUID.randomUUID() + ".parquet";
             try {

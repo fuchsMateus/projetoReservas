@@ -10,20 +10,22 @@ import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
 import java.io.File;
+import java.io.InputStream;
 
 public class FlinkConsumer {
 
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-        // Checkpoint para garantir tolerância a falhas
         env.enableCheckpointing(60000);
         env.getCheckpointConfig().setCheckpointTimeout(60000);
 
-        Schema schema = new Schema.Parser().parse(new File("src/main/resources/avro/reserva.avsc"));
+        InputStream avroSchemaStream = FlinkConsumer.class.getClassLoader().getResourceAsStream("avro/reserva.avsc");
+        Schema schema = new Schema.Parser().parse(avroSchemaStream);
+
 
         KafkaSource<GenericRecord> kafkaSource = KafkaSource.<GenericRecord>builder()
-                .setBootstrapServers("localhost:9092")
+                .setBootstrapServers("kafka:9093")
                 .setGroupId("flink-group")
                 .setTopics("reservas")
                 .setStartingOffsets(OffsetsInitializer.latest())
@@ -33,9 +35,9 @@ public class FlinkConsumer {
         DataStream<GenericRecord> stream = env.fromSource(kafkaSource, WatermarkStrategy.noWatermarks(), "Kafka Source");
 
         stream.keyBy(record -> record.get("nomeHotel").toString())
-                .process(new GroupMessages(schema.toString(), 50));
+                .process(new GroupMessages(schema.toString(), 2));
 
-        stream.print();
+        //stream.print();
 
         env.execute("FlinkConsumer");
 

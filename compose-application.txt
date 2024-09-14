@@ -1,0 +1,66 @@
+version: '3'
+services:
+  zookeeper:
+    image: zookeeper:3.7
+    ports:
+      - "2181:2181"
+    volumes:
+      - zookeeper_data:/data
+      - zookeeper_datalog:/datalog
+
+  kafka:
+    image: wurstmeister/kafka:latest
+    ports:
+      - "9092:9092"  # Porta externa para o host
+    environment:
+      KAFKA_LISTENERS: "INTERNAL://0.0.0.0:9093,EXTERNAL://0.0.0.0:9092"
+      KAFKA_ADVERTISED_LISTENERS: "INTERNAL://kafka:9093,EXTERNAL://localhost:9092"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT"
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_JMX_PORT: "9999"
+      KAFKA_JMX_HOSTNAME: localhost
+      KAFKA_LOG_RETENTION_BYTES: 524288000  # 500 MB
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - zookeeper
+
+  jobmanager:
+    image: flink:1.14-java11
+    hostname: jobmanager
+    container_name: jobmanager
+    ports:
+      - "8083:8081"  # Interface do JobManager (GUI)
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager
+    command: standalone-job --job-classname org.flinkconsumer.FlinkConsumer --parallelism 2
+    volumes:
+      - "C:\\Users\\fuchs\\Desktop\\Projetos\\projetoKafka\\flink-consumer\\out\\artifacts\\flink_consumer_jar:/opt/flink/usrlib"  # Mapeando o .jar
+      - "C:\\Users\\fuchs\\Desktop\\kafka\\dados:/dados"  # Mapeando os dados
+
+  taskmanager:
+    image: flink:1.14-java11
+    hostname: taskmanager
+    container_name: taskmanager
+    command: taskmanager
+    depends_on:
+      - jobmanager
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager
+        taskmanager.numberOfTaskSlots: 2
+    volumes:
+      - "C:\\Users\\fuchs\\Desktop\\Projetos\\projetoKafka\\flink-consumer\\out\\artifacts\\flink_consumer_jar:/opt/flink/usrlib"  # Mapeando o .jar
+      - "C:\\Users\\fuchs\\Desktop\\kafka\\dados:/dados"  # Mapeando os dados
+
+volumes:
+  zookeeper_data:
+  zookeeper_datalog:
+  flink_data:
